@@ -3,6 +3,7 @@ package com.example.obstacleracetask1;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageButton;
 
+import android.app.GameManager;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,15 +16,22 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
 
+import java.lang.reflect.Field;
+
 public class MainActivity extends AppCompatActivity {
     private AppCompatImageButton Game_BTN_left, Game_BTN_right;
+    //private ShapeableImageView[] Game_IMG_player;
+    //private ShapeableImageView[][] Game_IMG_ios;
+    //private ShapeableImageView[] Game_IMG_hearts;
+    //private ShapeableImageView Space_IMG_background;
+
     private ImageView[] Game_IMG_player;
     private ImageView[][] Game_IMG_ios;
     private ShapeableImageView[] Game_IMG_hearts;
     private ShapeableImageView Space_IMG_background;
+
     public static final int DELAY = 1000;
     //public static final int vibrate = 500;
-
     final Handler handler = new Handler();
     private GameManger gameManager;
 
@@ -89,20 +97,28 @@ public class MainActivity extends AppCompatActivity {
         Game_BTN_left = findViewById(R.id.game_BTN_left);
         Game_BTN_right = findViewById(R.id.game_BTN_right);
         Space_IMG_background = findViewById(R.id.space_IMG_background);
+
+        //Game_IMG_hearts= new ShapeableImageView[GameManger.MAX_LIVES];
+        //findMultipleViewsArray(Game_IMG_hearts,GameManger.MAX_LIVES,"game_IMG_heart");
+        //Game_IMG_ios= new ShapeableImageView[GameManger.ROWS][GameManger.COLUMNS];
+        //findMultipleViewsMatrix(Game_IMG_ios,GameManger.ROWS,GameManger.COLUMNS,"game_IMG_ios");
+        //Game_IMG_player=new ShapeableImageView[GameManger.COLUMNS];
+        //findMultipleViewsArray(Game_IMG_player,GameManger.COLUMNS,"game_IMG_Player");
+
         initIosArr();
         initHeartArr();
         initAndroidArr();
     }
 
     private void initAndroidArr() {
-        Game_IMG_player = new ImageView[]{
+        Game_IMG_player = new ShapeableImageView[]{
                 findViewById(R.id.game_IMG_PlayerLeft),
                 findViewById(R.id.game_IMG_PlayerCenter),
                 findViewById(R.id.game_IMG_PlayerRight),
         };
     }
 
-    private void initHeartArr() {
+  private void initHeartArr() {
         Game_IMG_hearts = new ShapeableImageView[]{
                 findViewById(R.id.game_IMG_heart3),
                 findViewById(R.id.game_IMG_heart2),
@@ -111,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initIosArr() {
-        Game_IMG_ios = new ImageView[][]{
+        Game_IMG_ios = new ShapeableImageView[][]{
                 {findViewById(R.id.game_IMG_ios1),
                         findViewById(R.id.game_IMG_ios2),
                         findViewById(R.id.game_IMG_ios3)},
@@ -122,9 +138,9 @@ public class MainActivity extends AppCompatActivity {
 
                 {findViewById(R.id.game_IMG_ios7),
                         findViewById(R.id.game_IMG_ios8),
-                        findViewById(R.id.game_IMG_ios9)},
+                       findViewById(R.id.game_IMG_ios9)},
 
-                {findViewById(R.id.game_IMG_ios10),
+               {findViewById(R.id.game_IMG_ios10),
                         findViewById(R.id.game_IMG_ios11),
                         findViewById(R.id.game_IMG_ios12)},
 
@@ -143,8 +159,6 @@ public class MainActivity extends AppCompatActivity {
                     Game_IMG_hearts[i].setVisibility(View.INVISIBLE);
                 }
     }
-
-
 
     private void refreshIosUI() {
         for (int i = 0; i < gameManager.getROWS(); i++) {
@@ -206,6 +220,41 @@ public class MainActivity extends AppCompatActivity {
             v.vibrate(500);
         }
     }
+
+    private void findMultipleViewsArray(ShapeableImageView[] array, int size, String baseName) {
+        for (int i = 0; i < size; i++) {
+            try {
+                // Use reflection to find the field in R.id that matches the viewName
+                Field idField = R.id.class.getDeclaredField(baseName + i);
+                int viewId = idField.getInt(idField);
+
+                // Find the view by its dynamically resolved ID and store in the array
+                array[i] = findViewById(viewId);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void findMultipleViewsMatrix(ShapeableImageView[][] matrix, int rows, int columns, String baseName) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                try {
+                    // Use reflection to find the field in R.id that matches the viewName
+                    Field idField = R.id.class.getDeclaredField(baseName + i + j);
+                    int viewId = idField.getInt(idField);
+
+                    // Find the view by its dynamically resolved ID and store in the array
+                    matrix[i][j] = findViewById(viewId);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
+
 }
 
 
