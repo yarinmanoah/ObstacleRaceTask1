@@ -16,11 +16,11 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
 
 public class MainActivity extends AppCompatActivity {
-    private AppCompatImageButton game_BTN_left,game_BTN_right;
-    private ImageView[] game_IMG_player;
-    private ImageView[][] game_IMG_ios;
-    private ShapeableImageView[] game_IMG_hearts;
-    private ShapeableImageView space_IMG_background;
+    private AppCompatImageButton Game_BTN_left, Game_BTN_right;
+    private ImageView[] Game_IMG_player;
+    private ImageView[][] Game_IMG_ios;
+    private ShapeableImageView[] Game_IMG_hearts;
+    private ShapeableImageView Space_IMG_background;
     public static final int DELAY = 1000;
     //public static final int vibrate = 500;
 
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         Glide
                 .with(this)
-                .load("https://www.pngall.com/wp-content/uploads/2016/07/Space-PNG-HD.png").into((space_IMG_background));
+                .load("https://www.pngall.com/wp-content/uploads/2016/07/Space-PNG-HD.png").into((Space_IMG_background));
 
         gameManager = new GameManger();
         initViews();
@@ -56,29 +56,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        game_BTN_left.setOnClickListener(v -> {
-            if (game_IMG_player[1].isShown()) {
-                game_IMG_player[0].setVisibility(View.VISIBLE);
-                game_IMG_player[1].setVisibility(View.INVISIBLE);
+        Game_BTN_left.setOnClickListener(v -> {
+            if (Game_IMG_player[1].isShown()) {
+                Game_IMG_player[0].setVisibility(View.VISIBLE);
+                Game_IMG_player[1].setVisibility(View.INVISIBLE);
                 gameManager.setAndroidIndex(0);
-            } else if (game_IMG_player[2].isShown()) {
-                game_IMG_player[1].setVisibility(View.VISIBLE);
-                game_IMG_player[2].setVisibility(View.INVISIBLE);
+            } else if (Game_IMG_player[2].isShown()) {
+                Game_IMG_player[1].setVisibility(View.VISIBLE);
+                Game_IMG_player[2].setVisibility(View.INVISIBLE);
                 gameManager.setAndroidIndex(1);
 
             }
         });
-        game_BTN_right.setOnClickListener(view -> {
-            if (game_IMG_player[0].isShown()) {
-                game_IMG_player[0].setVisibility(View.INVISIBLE);
-                game_IMG_player[1].setVisibility(View.VISIBLE);
-                game_IMG_player[2].setVisibility(View.INVISIBLE);
+        Game_BTN_right.setOnClickListener(view -> {
+            if (Game_IMG_player[0].isShown()) {
+                Game_IMG_player[0].setVisibility(View.INVISIBLE);
+                Game_IMG_player[1].setVisibility(View.VISIBLE);
+                Game_IMG_player[2].setVisibility(View.INVISIBLE);
                 gameManager.setAndroidIndex(1);
 
-            } else if (game_IMG_player[1].isShown()) {
-                game_IMG_player[0].setVisibility(View.INVISIBLE);
-                game_IMG_player[1].setVisibility(View.INVISIBLE);
-                game_IMG_player[2].setVisibility(View.VISIBLE);
+            } else if (Game_IMG_player[1].isShown()) {
+                Game_IMG_player[0].setVisibility(View.INVISIBLE);
+                Game_IMG_player[1].setVisibility(View.INVISIBLE);
+                Game_IMG_player[2].setVisibility(View.VISIBLE);
                 gameManager.setAndroidIndex(2);
 
             }
@@ -86,16 +86,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void findView() {
-        game_BTN_left = findViewById(R.id.game_BTN_left);
-        game_BTN_right = findViewById(R.id.game_BTN_right);
-        space_IMG_background = findViewById(R.id.space_IMG_background);
+        Game_BTN_left = findViewById(R.id.game_BTN_left);
+        Game_BTN_right = findViewById(R.id.game_BTN_right);
+        Space_IMG_background = findViewById(R.id.space_IMG_background);
         initIosArr();
         initHeartArr();
         initAndroidArr();
     }
 
     private void initAndroidArr() {
-        game_IMG_player = new ImageView[]{
+        Game_IMG_player = new ImageView[]{
                 findViewById(R.id.game_IMG_PlayerLeft),
                 findViewById(R.id.game_IMG_PlayerCenter),
                 findViewById(R.id.game_IMG_PlayerRight),
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initHeartArr() {
-        game_IMG_hearts = new ShapeableImageView[]{
+        Game_IMG_hearts = new ShapeableImageView[]{
                 findViewById(R.id.game_IMG_heart3),
                 findViewById(R.id.game_IMG_heart2),
                 findViewById(R.id.game_IMG_heart1),
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initIosArr() {
-        game_IMG_ios = new ImageView[][]{
+        Game_IMG_ios = new ImageView[][]{
                 {findViewById(R.id.game_IMG_ios1),
                         findViewById(R.id.game_IMG_ios2),
                         findViewById(R.id.game_IMG_ios3)},
@@ -138,9 +138,9 @@ public class MainActivity extends AppCompatActivity {
         boolean[] lifes = gameManager.getLifes();
             for (int i = 0; i < lifes.length; i++) {
                 if (lifes[i])
-                    game_IMG_hearts[i].setVisibility(View.VISIBLE);
+                    Game_IMG_hearts[i].setVisibility(View.VISIBLE);
                 else
-                    game_IMG_hearts[i].setVisibility(View.INVISIBLE);
+                    Game_IMG_hearts[i].setVisibility(View.INVISIBLE);
                 }
     }
 
@@ -150,8 +150,8 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < gameManager.getROWS(); i++) {
             for (int j = 0; j < gameManager.getCOLUMNS(); j++) {
                 if (gameManager.isActive(i, j))
-                    game_IMG_ios[i][j].setVisibility(View.VISIBLE);
-                else game_IMG_ios[i][j].setVisibility(View.INVISIBLE);
+                    Game_IMG_ios[i][j].setVisibility(View.VISIBLE);
+                else Game_IMG_ios[i][j].setVisibility(View.INVISIBLE);
             }
         }
     }
