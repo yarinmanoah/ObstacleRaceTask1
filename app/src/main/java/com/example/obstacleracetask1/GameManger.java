@@ -7,10 +7,8 @@ public class GameManger {
     public static final int MAX_LIVES = 3,COLUMNS = 3,ROWS = 5;
     public boolean[] lifes;
     public boolean[][] activeIos;
-    private int lives = MAX_LIVES;
-    private int AndroidIndex;
-    boolean isHit;
-    boolean finish;
+    private int lives = MAX_LIVES, AndroidIndex;
+    boolean isHit,finish;
 
     public GameManger() {
         AndroidIndex =1;

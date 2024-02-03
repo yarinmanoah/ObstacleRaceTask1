@@ -33,10 +33,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findView();
+
         Glide
                 .with(this)
                 .load("https://www.pngall.com/wp-content/uploads/2016/07/Space-PNG-HD.png").into((space_IMG_background));
-
 
         gameManager = new GameManger();
         initViews();
@@ -190,7 +190,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void startTimer() {
         handler.postDelayed(runnable, DELAY);
-
     }
 
     private void stopTimer() {
