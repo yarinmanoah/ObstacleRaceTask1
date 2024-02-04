@@ -20,18 +20,13 @@ import java.lang.reflect.Field;
 
 public class MainActivity extends AppCompatActivity {
     private AppCompatImageButton Game_BTN_left, Game_BTN_right;
-    //private ShapeableImageView[] Game_IMG_player;
-    //private ShapeableImageView[][] Game_IMG_ios;
-    //private ShapeableImageView[] Game_IMG_hearts;
-    //private ShapeableImageView Space_IMG_background;
-
     private ImageView[] Game_IMG_player;
     private ImageView[][] Game_IMG_ios;
     private ShapeableImageView[] Game_IMG_hearts;
     private ShapeableImageView Space_IMG_background;
 
     public static final int DELAY = 1000;
-    //public static final int vibrate = 500;
+    public static final long milisec = 500;
     final Handler handler = new Handler();
     private GameManger gameManager;
 
@@ -97,13 +92,6 @@ public class MainActivity extends AppCompatActivity {
         Game_BTN_left = findViewById(R.id.game_BTN_left);
         Game_BTN_right = findViewById(R.id.game_BTN_right);
         Space_IMG_background = findViewById(R.id.space_IMG_background);
-
-        //Game_IMG_hearts= new ShapeableImageView[GameManger.MAX_LIVES];
-        //findMultipleViewsArray(Game_IMG_hearts,GameManger.MAX_LIVES,"game_IMG_heart");
-        //Game_IMG_ios= new ShapeableImageView[GameManger.ROWS][GameManger.COLUMNS];
-        //findMultipleViewsMatrix(Game_IMG_ios,GameManger.ROWS,GameManger.COLUMNS,"game_IMG_ios");
-        //Game_IMG_player=new ShapeableImageView[GameManger.COLUMNS];
-        //findMultipleViewsArray(Game_IMG_player,GameManger.COLUMNS,"game_IMG_Player");
 
         initIosArr();
         initHeartArr();
@@ -172,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void refreshUI() {
         gameManager.update();
-        //if (gameManager.isFinish()) {
+        //if (gameManager.isFinish()) { //option to end game when needed
         //    vibrate();
         //    refreshHearts();
         //    refreshIosUI();
@@ -213,47 +201,8 @@ public class MainActivity extends AppCompatActivity {
     private void vibrate() {
         Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         // Vibrate for 500 milliseconds
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
-        } else {
-            //deprecated in API 26
-            v.vibrate(500);
-        }
+        v.vibrate(VibrationEffect.createOneShot(milisec, VibrationEffect.DEFAULT_AMPLITUDE));
     }
-
-    private void findMultipleViewsArray(ShapeableImageView[] array, int size, String baseName) {
-        for (int i = 0; i < size; i++) {
-            try {
-                // Use reflection to find the field in R.id that matches the viewName
-                Field idField = R.id.class.getDeclaredField(baseName + i);
-                int viewId = idField.getInt(idField);
-
-                // Find the view by its dynamically resolved ID and store in the array
-                array[i] = findViewById(viewId);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void findMultipleViewsMatrix(ShapeableImageView[][] matrix, int rows, int columns, String baseName) {
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                try {
-                    // Use reflection to find the field in R.id that matches the viewName
-                    Field idField = R.id.class.getDeclaredField(baseName + i + j);
-                    int viewId = idField.getInt(idField);
-
-                    // Find the view by its dynamically resolved ID and store in the array
-                    matrix[i][j] = findViewById(viewId);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-
 
 }
 
