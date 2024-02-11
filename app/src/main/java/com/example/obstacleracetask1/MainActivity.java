@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private ShapeableImageView[] Game_IMG_hearts;
     private ShapeableImageView Space_IMG_background;
 
-    public static final int DELAY = 1000;
+    public static final int DELAY = 1500;
     public static final long milisec = 500;
     final Handler handler = new Handler();
     private GameManger gameManager;
